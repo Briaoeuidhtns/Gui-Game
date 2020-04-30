@@ -3,6 +3,8 @@ package edu.sdsmt.brunner_brian;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ComputableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -15,8 +17,10 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import edu.sdsmt.brunner_brian.state.PlayerShape;
 import edu.sdsmt.brunner_brian.state.StateMachine;
 import edu.sdsmt.brunner_brian.views.EndDialog;
+import edu.sdsmt.brunner_brian.views.FabManager;
 import edu.sdsmt.brunner_brian.views.GameView;
 
 import static java.lang.Math.abs;
@@ -78,11 +82,14 @@ public class MainActivity extends AppCompatActivity {
              * https://stackoverflow.com/a/938657/2384326
              */
             @Override
-            public boolean onDown(MotionEvent e) {
+            public boolean onDown(MotionEvent __) {
                 return true;
             }
         });
         gameView.setOnTouchListener((__, e) -> gestureDetector.onTouchEvent(e));
 
+        final FabManager fabManager = new FabManager(this, findViewById(R.id.openPlayers), findViewById(R.id.playerRound), findViewById(R.id.playerSquare));
+
+        Transformations.map(fabManager.getSelected(), PlayerShape::factory).observe(this, gameView::setPlayerShape);
     }
 }

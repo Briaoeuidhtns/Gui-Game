@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import edu.sdsmt.brunner_brian.state.PlayerShape;
 import edu.sdsmt.brunner_brian.state.State;
 
 import static androidx.core.math.MathUtils.clamp;
@@ -32,7 +33,7 @@ public class GameView extends AnimatedView implements Observer<State> {
     final float rate = 1f / 2f;
     final Paint paint = new Paint();
     float currentPosX = .5f;
-    private final RectF player = new RectF(0, 0, 50, 50);
+    private PlayerShape player = PlayerShape.SQUARE;
 
     private final Queue<State> toTraverse = new LinkedList<>();
     private @Nullable
@@ -42,14 +43,6 @@ public class GameView extends AnimatedView implements Observer<State> {
 
     public LiveData<State> getStateAnimated() {
         return stateAnimated;
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        player.bottom = w * .1f;
-        player.right = h * .1f;
-        Log.v(TAG, "Setting player to " + player.toString());
     }
 
     // I Don't know which of these is required or which needs to be here, but at the very least it
@@ -62,19 +55,19 @@ public class GameView extends AnimatedView implements Observer<State> {
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.BLACK);
         Log.v(TAG, "GameView created 2");
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.BLACK);
         Log.v(TAG, "GameView created 3");
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.BLACK);
         Log.v(TAG, "GameView created 4");
     }
 
@@ -106,8 +99,18 @@ public class GameView extends AnimatedView implements Observer<State> {
         toMove = minMag(toMove, endPos - currentPosX);
         currentPosX = clamp(currentPosX + toMove, 0, 1);
 
-        player.offsetTo((currentPosX * getWidth()) - player.width() / 2, (getHeight() - player.height()) / 2f);
-        c.drawRect(player, paint);
+        float radius = .1f * getWidth(),
+                x = (currentPosX * getWidth()),
+                y = getHeight() / 2f;
+
+        switch (player) {
+            case SQUARE:
+                c.drawRect(x - radius, y - radius, x + radius, y + radius, paint);
+                break;
+            case ROUND:
+                c.drawCircle(x, y, radius, paint);
+                break;
+        }
 
         // Should transition rooms?
         if (abs(currentPosX - endPos) < .1 && target != null) {
@@ -135,8 +138,7 @@ public class GameView extends AnimatedView implements Observer<State> {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if (state instanceof Bundle)
-        {
+        if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
             currentPosX = bundle.getFloat(LOCATION);
             state = bundle.getParcelable(SUPER);
@@ -148,5 +150,9 @@ public class GameView extends AnimatedView implements Observer<State> {
     public void onChanged(State state) {
         toTraverse.add(state);
         Log.v(TAG, format("Current state: {0}, Next state: {1}", current, toTraverse.peek()));
+    }
+
+    public void setPlayerShape(PlayerShape shape) {
+        this.player = shape;
     }
 }

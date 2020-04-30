@@ -24,4 +24,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/openPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:text="@string/players"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/playerSquare"
+        android:layout_width="63dp"
+        android:layout_height="60dp"
+        android:background="@drawable/square_player"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/openPlayers"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@+id/openPlayers"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toStartOf="@+id/openPlayers" />
+
+    <Button
+        android:id="@+id/playerRound"
+        android:layout_width="63dp"
+        android:layout_height="60dp"
+        android:background="@drawable/round_player"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/playerSquare"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@+id/openPlayers"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toStartOf="@+id/openPlayers" />
 </androidx.constraintlayout.widget.ConstraintLayout>
