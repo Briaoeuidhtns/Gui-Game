@@ -148,6 +148,7 @@ public class GameView extends AnimatedView implements Observer<State> {
 
     @Override
     public void onChanged(State state) {
+        // GRADING: TRANSITION
         toTraverse.add(state);
         Log.v(TAG, format("Current state: {0}, Next state: {1}", current, toTraverse.peek()));
     }

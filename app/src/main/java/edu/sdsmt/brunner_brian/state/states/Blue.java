@@ -32,6 +32,7 @@ public class Blue extends State {
         return String.format("Blue{blueVisited: %s}", getBlueVisited());
     }
 
+    // GRADING: TRANSITION
     @Override
     public State doGoRight() {
         return new Grey(getBlueVisited());
