@@ -16,13 +16,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class StateMachine extends ViewModel implements Actions {
     private static final String TAG = "StateMachine";
-    private MutableLiveData<State> state;
+    private final MutableLiveData<State> state;
 
-    public MutableLiveData<State> getState() {
+    public final MutableLiveData<State> getState() {
         return state;
     }
 
-    private ThreadedTimer timer;
+    private final ThreadedTimer timer;
 
     public ThreadedTimer getTimer() {
         return timer;
@@ -35,16 +35,10 @@ public class StateMachine extends ViewModel implements Actions {
     }
 
     public StateMachine() {
-        this.state = new MutableLiveData<State>();
+        this.state = new MutableLiveData<>();
         this.timer = new ThreadedTimer(1, SECONDS);
         this.state.setValue(new Grey());
         Log.v(TAG, "initialized");
-    }
-
-    public State doInit() {
-        final State newState = new Grey();
-        state.setValue(newState);
-        return newState;
     }
 
     /**

@@ -23,6 +23,6 @@ public class Won extends State {
 
     @Override
     public int getRoomPosition() {
-        return 2;
+        return POSITION;
     }
 }

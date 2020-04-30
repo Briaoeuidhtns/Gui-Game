@@ -6,7 +6,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         final StateMachine stateMachine = new ViewModelProvider(this).get(StateMachine.class);
         Log.v(TAG, stateMachine.toString());
-        final GameView gameView = this.<GameView>findViewById(R.id.gameView);
+        final GameView gameView = this.findViewById(R.id.gameView);
 
         stateMachine.getState().observe(this, gameView);
         stateMachine.getState().observe(this, state -> {

@@ -3,7 +3,6 @@ package edu.sdsmt.brunner_brian;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import java.util.concurrent.ScheduledFuture;
@@ -27,6 +26,7 @@ public class ThreadedTimer extends LiveData<Long> {
 
     public ThreadedTimer(long rate, TimeUnit unit) {
         super(0L);
+        Log.v(TAG, "Timer created");
         this.period = rate;
         this.unit = unit;
     }

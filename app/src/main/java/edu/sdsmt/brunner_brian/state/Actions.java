@@ -1,7 +1,7 @@
 package edu.sdsmt.brunner_brian.state;
 
 public interface Actions {
-    public State doGoLeft();
+    State doGoLeft();
 
-    public State doGoRight();
+    State doGoRight();
 }

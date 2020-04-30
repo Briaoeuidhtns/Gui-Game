@@ -5,14 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,19 +24,17 @@ import edu.sdsmt.brunner_brian.state.State;
 import static androidx.core.math.MathUtils.clamp;
 import static java.lang.Math.abs;
 import static java.lang.Math.copySign;
-import static java.lang.Math.min;
 import static java.text.MessageFormat.format;
 import static java.util.Objects.requireNonNull;
 
 public class GameView extends AnimatedView implements Observer<State> {
     private static final String TAG = "GameView";
-    private static final long animSpeed = 1;
     final float rate = 1f / 2f;
     final Paint paint = new Paint();
     float currentPosX = .5f;
-    RectF player = new RectF(0, 0, 50, 50);
+    private final RectF player = new RectF(0, 0, 50, 50);
 
-    private Queue<State> toTraverse = new LinkedList<>();
+    private final Queue<State> toTraverse = new LinkedList<>();
     private @Nullable
     State current;
 
@@ -118,6 +118,30 @@ public class GameView extends AnimatedView implements Observer<State> {
             current = null;
         }
         invalidate();
+    }
+
+    private static final String TO_TRAVERSE = "GameView.toTraverse";
+    private static final String LOCATION = "GameView.location";
+    private static final String SUPER = "GameView.super";
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putFloat(LOCATION, currentPosX);
+        bundle.putParcelable(SUPER, super.onSaveInstanceState());
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle)
+        {
+            Bundle bundle = (Bundle) state;
+            currentPosX = bundle.getFloat(LOCATION);
+            state = bundle.getParcelable(SUPER);
+        }
+        super.onRestoreInstanceState(state);
     }
 
     @Override

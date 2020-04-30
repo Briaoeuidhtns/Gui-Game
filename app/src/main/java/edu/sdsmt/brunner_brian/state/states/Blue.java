@@ -2,7 +2,6 @@ package edu.sdsmt.brunner_brian.state.states;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import edu.sdsmt.brunner_brian.state.State;
 

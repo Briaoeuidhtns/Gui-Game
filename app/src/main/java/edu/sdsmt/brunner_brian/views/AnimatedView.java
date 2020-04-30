@@ -9,8 +9,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import java.text.MessageFormat;
-
 import edu.sdsmt.brunner_brian.BuildConfig;
 
 import static java.text.MessageFormat.format;
@@ -19,7 +17,7 @@ import static java.text.MessageFormat.format;
  * Handle deltas for animation
  */
 public abstract class AnimatedView extends View {
-    private static String TAG = "AnimatedView";
+    private static final String TAG = "AnimatedView";
     private long lastDraw = -1;
 
     public AnimatedView(Context context) {

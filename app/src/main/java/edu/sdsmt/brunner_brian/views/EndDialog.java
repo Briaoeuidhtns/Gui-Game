@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import edu.sdsmt.brunner_brian.R;
 
@@ -24,7 +23,7 @@ public class EndDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog, container, false);
 
-        final TextView end = view.<TextView>findViewById(R.id.scoreField);
+        final TextView end = view.findViewById(R.id.scoreField);
         final long score = requireNonNull(getArguments()).getLong(SCORE_ARG);
         end.setText(format("Score: {0}", score));
 
