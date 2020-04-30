@@ -41,6 +41,7 @@ public class Red extends State {
     public State doGoRight() {
         if (getBlueVisited())
             return new Won();
+        // GRADING: GUARD
         throw new InvalidTaskException(this, "doGoRight");
     }
 }

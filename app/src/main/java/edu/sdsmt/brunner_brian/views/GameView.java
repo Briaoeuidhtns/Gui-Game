@@ -29,7 +29,7 @@ import static java.util.Objects.requireNonNull;
 public class GameView extends AnimatedView implements Observer<State> {
     private static final String TAG = "GameView";
     private static final long animSpeed = 1;
-    final float rate = 1f / 6f;
+    final float rate = 1f / 2f;
     final Paint paint = new Paint();
     float currentPosX = .5f;
     RectF player = new RectF(0, 0, 50, 50);
@@ -56,21 +56,25 @@ public class GameView extends AnimatedView implements Observer<State> {
     // needed the second one
     public GameView(Context context) {
         super(context);
+        paint.setColor(Color.BLACK);
         Log.v(TAG, "GameView created 1");
     }
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        paint.setColor(Color.GREEN);
         Log.v(TAG, "GameView created 2");
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        paint.setColor(Color.GREEN);
         Log.v(TAG, "GameView created 3");
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        paint.setColor(Color.GREEN);
         Log.v(TAG, "GameView created 4");
     }
 
@@ -88,8 +92,8 @@ public class GameView extends AnimatedView implements Observer<State> {
             Log.v(TAG, format("No current, replacing with {0}", current));
         }
 
+        // GRADING: ROOM
         setBackgroundColor(current.getColor());
-        paint.setColor(Color.GREEN);
         final @Nullable State target = toTraverse.peek();
         float endPos;
         if (target == null || target.getRoomPosition() == current.getRoomPosition())
