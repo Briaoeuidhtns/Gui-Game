@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 import edu.sdsmt.brunner_brian.state.StateMachine;
 import edu.sdsmt.brunner_brian.views.EndDialog;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         stateMachine.getState().observe(this, gameView);
         stateMachine.getState().observe(this, state -> {
         });
+        TextView score = this.findViewById(R.id.liveScore);
+        stateMachine.getTimer().observe(this, time->{score.setText(String.format(Locale.getDefault(), "%d", time));});
 
         gameView.getStateAnimated().observe(this, state -> {
             final String msg = state.getEntryMessage();
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 args.putLong(EndDialog.SCORE_ARG, stateMachine.getTimer().getValue());
                 dialog.setArguments(args);
                 dialog.show(getSupportFragmentManager(), null);
+                stateMachine.getTimer().cancel();
             }
         });
 
